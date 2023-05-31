@@ -69,7 +69,7 @@ rowPeriod = 100;   % 进度条间隔，越大运行越快；减小可以观察画线
 Velocity_max = [];	% 若开光闸运行速度在最大与最小之外，线为黑色
 Velocity_min = [];	% 设为[]则自动遍历开光闸速度
 dtime = 0;  % 画图间隔
-continue_fabricata = 1; % 设为1则启动连续加工模式,绘图colorbar仅依据当前程序
+continue_fabricata = 0; % 设为1则启动连续加工模式,绘图colorbar仅依据当前程序
 
 %% 保存提供加工程序的工作区
 if ~continue_fabricata
@@ -332,8 +332,6 @@ end
 if PB2PE == 0
 theta = 2*pi;
 pgmR = sqrt(pgmI^2+pgmJ^2);
-T = eye(3);
-VelocityNow = (T*[-sin(theta);cos(theta);0])';
 else
 n1=(PointBefor-O)/pgmR;n2=cross(Vertical,n1); %参数方程径向向量
 O2PE=PointNow - O;
@@ -347,12 +345,32 @@ end
 if plotSwitch
     if dtime,pause(dtime);end
     if isCCW,t = linspace(theta,0,curveNum);else,t = linspace(0,theta,curveNum);end
-    A = [pgmR*cos(t);pgmR*sin(t);ones(1,curveNum)];	% 圆平面坐标系的参数方程[x,y,1]
-    B = T*A;    % 局部坐标系{X'OY'}转换到{XYZ}
-    x = B(1,:);y = B(2,:);z = B(3,:);
-    if any(y<costY);costY=min(y(y<costY));end   % 判断Y消耗长度
-    temp = plot3(x,y,z,'-','LineWidth',lineWidth);
-    temp2 = plot3([x(1) x(end)],[y(1) y(end)],[z(1) z(end)],'.'); % 首尾两点标记
+    if PB2PE == 0
+        Axis = 'XYZ';Axis(strfind(Axis,s{1}(1)))=[];Axis(strfind(Axis,s{2}(1)))=[];
+        switch(Axis)
+            case 'X',Move.X = ones(1,curveNum)*O(1);
+            case 'Y',Move.Y = ones(1,curveNum)*O(2);
+            case 'Z',Move.Z = ones(1,curveNum)*O(3);
+            otherwise,error('error');
+        end
+        switch(s{1}(1))
+            case 'X',Move.(s{1}(1))=pgmR*cos(t)+O(1);
+            case 'Y',Move.(s{1}(1))=pgmR*cos(t)+O(2);
+            case 'Z',Move.(s{1}(1))=pgmR*cos(t)+O(3);
+        end
+        switch(s{2}(1))
+            case 'X',Move.(s{2}(1))=pgmR*sin(t)+O(1);
+            case 'Y',Move.(s{2}(1))=pgmR*sin(t)+O(2);
+            case 'Z',Move.(s{2}(1))=pgmR*sin(t)+O(3);
+        end
+    else
+        A = [pgmR*cos(t);pgmR*sin(t);ones(1,curveNum)];	% 圆平面坐标系的参数方程[x,y,1]
+        B = T*A;    % 局部坐标系{X'OY'}转换到{XYZ}
+        Move.X = B(1,:);Move.Y = B(2,:);Move.Z = B(3,:);
+    end
+    if any(Move.Y<costY);costY=min(Move.Y(Move.Y<costY));end   % 判断Y消耗长度
+    temp = plot3(Move.X,Move.Y,Move.Z,'-','LineWidth',lineWidth,'Color',lineColor);
+    temp2 = plot3([Move.X(1) Move.X(end)],[Move.Y(1) Move.Y(end)],[Move.Z(1) Move.Z(end)],'.'); % 首尾两点标记
     if ~any(lineColor)&&pgmF>Velocity_min&&pgmF<=Velocity_max
         temp.Color = lineColorF(fix(pgmF - Velocity_min),:);
     else,temp.Color = lineColor;
