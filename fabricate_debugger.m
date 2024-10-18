@@ -1,124 +1,96 @@
-% ¸üĞÂÈÕÖ¾
-%{
-v2.4
-2023-10-09
-.¼ÓÈëCW/CCW¾À´í¼ì²â
-v2.3
-2023/5/31
-.¼ÓÈëCW/CCW»­Õû¸öÔ²
-V2.2
-2023/4/26
-.¼ÓÈëÁ¬Ğø.pgm¼Ó¹¤»æÖÆ£¨ËÙ¶Ècolorbar½ö´ú±íµ±Ç°³ÌĞò£¬ÉÏ¸ö³ÌĞò²»ÖØ»æ
-.¼ÓÈë»­Í¼¼ä¸ô
-.¸ÄÉÆfigure1¡¢figure2ÅÅÁĞ£¨ÏÖÔÚfigure2ÒÀ¾İfigure1µÄÎ»ÖÃÊÇ½ôÌùÔÚÓÒ²à
-.ĞŞ¸´0.xËÙ¶ÈµÄ»æÍ¼ÑÕÉ«
-V2.1
-.ĞŞ¸´CW»æÖÆÑÕÉ«
-.ĞŞ¸´notdwellÅĞ¶Ï
-.ĞŞ¸´pieÍ¼timeÌâÄ¿ÎÄ±¾
-.ĞŞ¸´LINEARÖ¸ÁîÎ´ÔË¶¯±¨´í
-V2.0
-.ÖØ¹¹
-V1.6
-2022/07/19
-.Ôö¼Óº¯Êıis_dwell£¬ĞŞ¸´±äÏòdwellÅĞ¶Ï
-V1.5
-2022/06/21
-.¼ÓÈëÒÔ'pgmVariables.mat'ÃüÃû£¬ÔÚµ±Ç°ÎÄ¼ş¼ĞÏÂ£¬»º´æÉÏ´ÎÔËĞĞÊı¾İ
-.¸ÄÉÆcolorbarÉ«½×
-V1.4
-2022/05/04
-.¼ÓÈë±ä·½ÏòÊÇ·ñdwellÅĞ¶¨
-.ĞŞ¸´CW¡¢CCW»­Ïß
-V1.3
-2021/12/1
-.¸ÄÉÆ±êÊ¶·ûÊ¶±ğÂß¼­
-.¼ÓÈëÊÇ·ñ»­Í¼£¬.pgmÖĞµÄ"'plotSwitch 1"¼´Îª¿ªÆô»­Í¼£¬"'plotSwitch 0"Îª¹Ø±Õ£¬Ä¬ÈÏ¿ªÆô
-.¼ÓÈëX¡¢Y¡¢ZÖá±êÊ¶
-.¸ÄÉÆcostY±äÁ¿ÒÔ´æ´¢×î´óYÖµ£¨Ö®Ç°Ö±½ÓÓÃ×îºóµÄY×öÎªÊ¹ÓÃÁ¿
-.¼ÓÈë½ø¶ÈÌõ£¬¿ÉÒÔÔÚline 47ÖĞ¸ü¸ÄË¢ĞÂ¼ä¸ôĞĞÊı£¬Ä¬ÈÏÎª1000ĞĞ
-.¼ÓÈëËÙ¶ÈÑÕÉ«Ïß£¬É«½×Îªcool£¬ÈôÑÕÉ«±ä»¯²»Ã÷ÏÔ¿ÉÔÚline 48¡¢49ÖĞ¸ü¸Ä×î´óËÙ¶È¼°×îĞ¡...
-ËÙ¶È£¬Ä¬ÈÏÎª100mm/s¼°0£¬×î´óËÙ¶ÈÉèÖÃ¹ıµÍ»á±¨´í£¬µ±Ç°ËÙ¶ÈµÍÓÚ×îĞ¡Öµ»á»­ºÚÏß
-V1.2
-2021/10/20
-add:
-.Ôö¼Ó°æ±¾¸üĞÂ¹¦ÄÜ£¬»ùÓÚÔÚmatlabµÄËÑË÷Â·¾¶ÖĞ¼ÓÈëº¯ÊıdebuggerVersionCheck()ÊµÏÖ
-.Ôö¼Ó.pgm×¢ÊÍÊ¶±ğ£¬ÓûÔÚĞÂ°æ±¾debuggerÖĞÊµÏÖ²¿·Ö»æÍ¼¹¦ÄÜ
-.Ôö¼Ó.pgm³ÌĞòÓï¾äÊ¹ÓÃÇé¿ö¼ÆÊı
-change:
-.figure()->clf£¬²»ĞÂ½¨Í¼´°
-remove:
-.ÒÆ³ı»­Í¼Ê×¾äplot3(0,0,0)£¬ÒÔ±ãÓÚÆ½Ãæ¹Û²ì·Ç3DÍ¼
-V1.1
-2021/10/05
-add:
-.Ôö¼ÓÖ§³Ö±êÊ¶·ûG92
-.Ôö¼ÓÔËĞĞ½áÊøÏÔÊ¾Ê¹ÓÃÆ¬³¤ÒÔ¼°ÔËĞĞÔ¤¹ÀÊ±¼ä
-.Ôö¼Ó¹âÕ¢¿ª¹ØÏß¿í
-.Ôö¼ÓÇå³ıÎŞ¹Ø±äÁ¿
-.Ôö¼Ó¿ÕĞĞÊ¶±ğ
-.Ôö¼Ó»­Í¼Ê×¾äÎªplot3(0,0,0)
-fixed:
-.ĞŞÕıLINEAR¼ÆÊ±Îª0
-changed:
-.µ÷Õû±êÊ¶·ûÅĞ¶ÏË³Ğò
-.µ÷ÕûCW/CCWÖĞlinspaceÈ¡µãÊı100->10
-.µ÷Õûfigureµ¯³öÔÚÑ¡ÎÄ¼şÖ®ºó
-.µ÷ÕûÕû¸ö³ÌĞòÖ»µ÷ÓÃÁ½´Îhold
-%}
-%% Ô¤Éè²ÎÊı
-global Velocity_min Velocity_max dtime  %#ok
-rowPeriod = 1000;   % ½ø¶ÈÌõ¼ä¸ô£¬Ô½´óÔËĞĞÔ½¿ì£»¼õĞ¡¿ÉÒÔ¹Û²ì»­Ïß
-Velocity_max = [];	% Èô¿ª¹âÕ¢ÔËĞĞËÙ¶ÈÔÚ×î´óÓë×îĞ¡Ö®Íâ£¬ÏßÎªºÚÉ«
-Velocity_min = [];	% ÉèÎª[]Ôò×Ô¶¯±éÀú¿ª¹âÕ¢ËÙ¶È
-dtime = 0;  % »­Í¼¼ä¸ô
-continue_fabricata = 1; % ÉèÎª1ÔòÆô¶¯Á¬Ğø¼Ó¹¤Ä£Ê½,»æÍ¼colorbar½öÒÀ¾İµ±Ç°³ÌĞò
+%% é€‰å–.pgmæ–‡ä»¶
+% dbclear if error
+% dbstop if error
+[fileName,filePath]=uigetfile('*.pgm','Save File','');
+pgmPath = fullfile(filePath,fileName);
 
-%% ±£´æÌá¹©¼Ó¹¤³ÌĞòµÄ¹¤×÷Çø
+ticAll = tic;
+if ~fileName,error('æœªé€‰å–æ–‡ä»¶');end
+a = strfind(fileName,'.');
+if ~a,error('é€‰å–æ–‡ä»¶æ— â€œ.â€');end
+if fileName(max(a):end) ~= '.pgm',error('æœªé€‰å–.pgmæ–‡ä»¶');end%#ok
+
+%% é¢„è®¾å‚æ•°
+global Velocity_min Velocity_max dtime  %#ok
+rowPeriod = 1000;   % è¿›åº¦æ¡é—´éš”ï¼Œè¶Šå¤§è¿è¡Œè¶Šå¿«ï¼›å‡å°å¯ä»¥è§‚å¯Ÿç”»çº¿
+Velocity_max_input = [];	% è‹¥å¼€å…‰é—¸è¿è¡Œé€Ÿåº¦åœ¨æœ€å¤§ä¸æœ€å°ä¹‹å¤–ï¼Œçº¿ä¸ºé»‘è‰²
+Velocity_min_input = [];	% è®¾ä¸º[]åˆ™è‡ªåŠ¨éå†å¼€å…‰é—¸é€Ÿåº¦
+dtime = 0;  % ç”»å›¾é—´éš”
+continue_fabricata = 0; % è®¾ä¸º1åˆ™å¯åŠ¨è¿ç»­åŠ å·¥æ¨¡å¼,ç»˜å›¾colorbarä»…ä¾æ®å½“å‰ç¨‹åº
+pgmDiv.Xsize = 5;
+pgmDiv.Zsize = 0.05;
+
+%% ä¿å­˜æä¾›åŠ å·¥ç¨‹åºçš„å·¥ä½œåŒº
 if ~continue_fabricata
-    save('temp.mat',"Velocity_min","Velocity_max","dtime","rowPeriod","continue_fabricata")
-    clearvars Velocity_min Velocity_max dtime rowPeriod continue_fabricata
+    save('temp.mat',"Velocity_min_input","Velocity_max_input","Velocity_min","Velocity_max","dtime","rowPeriod","continue_fabricata","pgmPath","pgmDiv","ticAll")
+    clearvars Velocity_min_input Velocity_max_input dtime rowPeriod continue_fabricata
     save('pgmVariables.mat')
     clear
     load("temp.mat")
     delete("temp.mat")
 end
-%% Ñ¡È¡.pgmÎÄ¼ş
-dbclear if error
-[fileName,filePath]=uigetfile('*.pgm','Save File','');
 
-if ~fileName,error('Î´Ñ¡È¡ÎÄ¼ş');end
-a = strfind(fileName,'.');
-if ~a,error('Ñ¡È¡ÎÄ¼şÎŞ¡°.¡±');end
-if fileName(max(a):end) ~= '.pgm',error('Î´Ñ¡È¡.pgmÎÄ¼ş');end%#ok
-% dbstop in fabricate_debugger if error
-%% ¼ÆËãÎÄ±¾×ÜĞĞÊı
-tic,f=fopen([filePath,fileName],'r');
+%% PROGRAMæ„å»ºæ–°æ–‡ä»¶ä¸ºtemp.pgm
+tic,f=fopen(pgmPath,'r');
+pgm.list = {};
+pgm.num = 0;
+while ~feof(f)
+    currentLine = fgetl(f);
+    if isempty(currentLine),continue;end % ç©ºè¡Œ
+    s = textscan(currentLine,'%s ');
+    if isempty(s),continue;end % ç©ºè¡Œ
+    if strcmp(s{1}{1},'PROGRAM')&&length(s{1})>2&&strcmp(s{1}{3},'RUN')
+        pgm.num = pgm.num+1;
+        pgm.list(pgm.num)={s{1}{4}(2:end-1)};
+    end
+end
+fclose(f);toc,fprintf('æ£€æµ‹PROGRAM RUNå®Œæˆ\n');
+
+if pgm.num
+    tic,fprintf('æ£€æµ‹åˆ°PROGRAM RUN,åˆå¹¶å­˜å‚¨ä¸ºtemp.pgm\n');
+    f=fopen('temp.pgm','w');
+    for temp = 1:pgm.num
+        ftemp = fopen(pgm.list{temp},'r');
+        while ~feof(ftemp)
+            currentLine = fgets(ftemp);
+            fwrite(f,currentLine);
+        end
+        fwrite(f,sprintf('\n''OYY_END\n'));
+        fclose(ftemp);
+    end
+    fclose(f);toc,fprintf('temp.pgmç”Ÿæˆå®Œæˆ\n');
+    pgmPath = 'temp.pgm';
+end
+
+%% è®¡ç®—æ–‡æœ¬æ€»è¡Œæ•°
+tic,f=fopen(pgmPath,'r');
 rowTotal = 0;
 while ~feof(f)
     rowTotal = rowTotal + sum(fread(f,10000,'char')==10);
 end
 fclose(f);toc
-fprintf('.pgm×ÜĞĞÊı%d\n',rowTotal);
+fprintf('.pgmæ€»è¡Œæ•°%d\n',rowTotal);
 
-%% ÕÒ³öËÙ¶È×î´óÖµ¡¢×îĞ¡Öµ
-vmax=0;vmin=0;
-if isempty(Velocity_max),vmax=1;Velocity_max=-inf;end
-if isempty(Velocity_min),vmin=1;Velocity_min = inf;end
+%% æ‰¾å‡ºé€Ÿåº¦æœ€å¤§å€¼ã€æœ€å°å€¼
+vmax=0;vmin=0;tt=1;t=1;
+if isempty(Velocity_max_input),vmax=1;Velocity_max = -inf;end
+if isempty(Velocity_min_input),vmin=1;Velocity_min = inf;end
 if vmax||vmin
-    tic,f=fopen([filePath,fileName],'r');
+    tic,f=fopen(pgmPath,'r');
     while ~feof(f)
         currentLine = fgetl(f);
+        if isempty(currentLine),continue;end % ç©ºè¡Œ
         s = textscan(currentLine,'%s ');
+        if isempty(s),continue;end % ç©ºè¡Œ
         switch s{1}{1}
             case 'PSOCONTROL'
-                switch s{1}{3} 
+                switch s{1}{3}
                     case 'ON',t=1;
                     case 'OFF',t=0;
                     case 'RESET',t=0;
                 end
             case {'LINEAR','CW','CCW'}
-                if t
+                if t&&tt
                     Velocity_temp = textscan(currentLine,'%*[^F] F%f');
                     Velocity_temp = Velocity_temp{:};
                     if vmax,Velocity_max = max(Velocity_temp,Velocity_max);end
@@ -132,24 +104,25 @@ if vmax||vmin
         end
     end,toc
     temp = ceil(log10(Velocity_max))+6;
-    fprintf('×î´óËÙ¶È£º%*.4f\n×îĞ¡ËÙ¶È£º%*.4f\n',temp,Velocity_max,temp,Velocity_min);
+    fprintf('æœ€å¤§é€Ÿåº¦ï¼š%*.4f\næœ€å°é€Ÿåº¦ï¼š%*.4f\n',temp,Velocity_max,temp,Velocity_min);
 end
-
+toc(ticAll)
 %% main
-f=fopen([filePath,fileName],'r');
+f=fopen(pgmPath,'r');
 Category = {'LINEAR';'CW&CCW';'DWELL'};Time = zeros(length(Category),1);
 time = table(Category,Time);time.Properties.VariableUnits = {'' 's'};
+timeList = zeros(pgm.num,1);
 Category = {'LINEAR';'DWELL';'PSOCONTROL';'CW&CCW';'INCREMENTAL&ABSOLUTE';'Other'};
 Count = zeros(length(Category),1);count = table(Category,Count);
-rowNow = 0; % µ±Ç°ĞĞÊı
+rowNow = 0; % å½“å‰è¡Œæ•°
 f1=figure(1);hold on;%daspect([1 1 1]);
 if ~exist("PointNow","var")
     clf;hold on;
     xlabel('X','Color','r');ylabel('Y','Color','r');zlabel('Z','Color','r');
     view([1,5,3]);
-    global PointBefor PointNow PointG92 isABSOLUTE costY...	% Î»ÖÃ×´Ì¬
-        VelocityBefor VelocityNow Vindex notdwell ...    % ÔË¶¯×´Ì¬
-        plotSwitch pgmF pgmR lineColorF lineWidth lineColor  %#ok    % »æÍ¼²ÎÊı
+    global PointBefor PointNow PointG92 isABSOLUTE costY...	% ä½ç½®çŠ¶æ€
+        VelocityBefor VelocityNow Vindex notdwell ...    % è¿åŠ¨çŠ¶æ€
+        plotSwitch pgmF pgmR lineColorF lineWidth lineColor  %#ok    % ç»˜å›¾å‚æ•°
     PointBefor=[0,0,0];PointNow=[0,0,0];PointG92=[0,0,0];costY=0;
     VelocityBefor=[0,0,0];VelocityNow=[0,0,0];Vindex = 1;
     plotSwitch=1;pgmF=nan;pgmR=[];lineWidth=0.1;lineColor=[1 1 1];
@@ -158,71 +131,100 @@ if Velocity_min<1,Vindex = 1/Velocity_min;end
 Velocity_min=Vindex*Velocity_min-1;Velocity_max=Vindex*Velocity_max;
 lineColorF = colormap(cool(fix(Velocity_max - Velocity_min)));
 notdwell=[0,0,0];
-waitBar=waitbar(0,'1','name','SIMULATING...');
+waitBar=waitbar(0,'1','name','SIMULATING...');pgmCount = 1;
 while ~feof(f)
     rowNow = rowNow + 1;
     if mod(rowNow,rowPeriod) == 0
-        waitbar(rowNow/rowTotal,waitBar,sprintf('%.3g%%£¬rowNow=%d\nrowTotal=%d',...
-            rowNow/rowTotal*100,rowNow,rowTotal));
+        waitbar(rowNow/rowTotal,waitBar,sprintf('%.3g%%ï¼ŒrowNow=%d\nrowTotal=%d',...
+            rowNow/rowTotal*100,rowNow,rowTotal));toc(ticAll)
     end
     currentLine = fgetl(f);
-    if isempty(currentLine),continue;end % ¿ÕĞĞ
+    if isempty(currentLine),continue;end % ç©ºè¡Œ
     s = textscan(currentLine,'%s ');
-    if isempty(s),continue;end % ¿ÕĞĞ
+    if isempty(s),continue;end % ç©ºè¡Œ
     switch s{1}{1}
         case 'LINEAR'
             time.Time(1)=time.Time(1)+LINEAR(s{1}(2:end)');count.Count(1)=count.Count(1)+1;
         case 'DWELL',time.Time(3)=time.Time(3)+str2double(s{1}(2));count.Count(2)=count.Count(2)+1;
             notdwell=[0,0,0];VelocityNow=[0,0,0];
+        case 'WAIT',time.Time(3)=time.Time(3)+0.1;count.Count(2)=count.Count(2)+1;
+            % if s{1}(2)
+            for temp = s{1}(3:end)
+                switch temp{1}
+                    case 'X'
+                        notdwell(1)=0;VelocityNow(1)=0;
+                    case 'Y'
+                        notdwell(2)=0;VelocityNow(2)=0;
+                    case 'Z'
+                        notdwell(3)=0;VelocityNow(3)=0;
+                        % otherwise,error('%s',currentLine);
+                end
+            end
         case 'PSOCONTROL',count.Count(3)=count.Count(3)+1;
             switch s{1}{3}
                 case 'ON',lineColor = [0 0 0];lineWidth = 1.5;
                 case 'OFF',lineColor = [1 1 0];lineWidth = 0.1;
                 case 'RESET'
-                otherwise,error([mfilename,'£º²Ù×÷·û·Ç·¨'],'PSOCONTROL:·Ç·¨²Ù×÷·û<%s>',s{1}{3});
+                otherwise,error([mfilename,'ï¼šæ“ä½œç¬¦éæ³•'],'PSOCONTROL:éæ³•æ“ä½œç¬¦<%s>',s{1}{3});
             end
         case 'CW',time.Time(2)=time.Time(2)+CW(0,s{1}(2:end)');count.Count(4)=count.Count(4)+1;
         case 'CCW',time.Time(2)=time.Time(2)+CW(1,s{1}(2:end)');count.Count(4)=count.Count(4)+1;
         case 'INCREMENTAL',isABSOLUTE=0;count.Count(5)=count.Count(5)+1;
         case 'ABSOLUTE',isABSOLUTE=1;count.Count(5)=count.Count(5)+1;
         case 'G92',G92(s{1}{2:end});count.Count(6)=count.Count(6)+1;
-        case {'G359','ENABLE','METRIC','SECONDS','VELOCITY','PSOOUTPUT'},count.Count(6)=count.Count(6)+1;
+        case {'G359','ENABLE','METRIC','SECONDS','VELOCITY','PSOOUTPUT','PROGRAM'},count.Count(6)=count.Count(6)+1;
         otherwise
-            if currentLine(1) == "'"    % ×¢ÊÍĞĞ
-                if strcmp(s{1}{1},"'plotSwitch")   %»æÖÆÅĞ¶Ï
+            if currentLine(1) == "'"    % æ³¨é‡Šè¡Œ
+                if strcmp(s{1}{1},"'plotSwitch")   % ç»˜åˆ¶åˆ¤æ–­
                     switch s{1}{2}
                         case '1',plotSwitch=1;
                         case '0',plotSwitch=0;
-                        otherwise,error("'plotSwitch·ÇÊ¶±ğ²Ù×÷·û£º%s",s{1}{2});
+                        otherwise,error("'plotSwitchéè¯†åˆ«æ“ä½œç¬¦ï¼š%s",s{1}{2});
                     end
                 end
-                continue;
+                if strcmp(pgmPath,'temp.pgm')&&strcmp(s{1}{1},"'OYY_END")   % .pgmä¹‹ä¸€ç»ˆæ­¢
+                    mesh([0,0;pgmDiv.Xsize,pgmDiv.Xsize],[costY,costY;costY,costY],[PointNow(3),PointNow(3)-pgmDiv.Zsize;PointNow(3),PointNow(3)-pgmDiv.Zsize],EdgeColor='k',LineWidth=2,FaceColor='w',FaceAlpha=0.3);
+                    timeList(pgmCount) = sum(time.Time);pgmCount = pgmCount+1;
+                end
+            else
+                error([mfilename,'ï¼šæ ‡è¯†ç¬¦éæ³•'],[currentLine,'\néæ³•æ ‡è¯†ç¬¦<%s>ï¼Œline %d'],s{1}{1},rowNow);
             end
-            error([mfilename,'£º±êÊ¶·û·Ç·¨'],[currentLine,'\n·Ç·¨±êÊ¶·û<%s>£¬line %d'],s{1}{1},rowNow);
     end
 end
 %% close
-fclose(f);delete(waitBar);hold off;
+fclose("all");delete(waitBar);hold off;
 % colorbar
 numV = Velocity_max - Velocity_min;
 Velocity_min = Velocity_min + 1;
 if numV > 10,c = colorbar('Ticks',0:0.1:1,'TickLabels',{linspace(Velocity_min,Velocity_max,11)/Vindex});
 else,c = colorbar('Ticks',linspace(0,1,numV),'TickLabels',{linspace(Velocity_min,Velocity_max,numV)/Vindex});
-end,c.Label.String = '¿ª¹âÕ¢µÄÔË¶¯ËÙ¶È';
+end,c.Label.String = 'å¼€å…‰é—¸çš„è¿åŠ¨é€Ÿåº¦';
 % msgbox
-msg = {['Æ¬³¤(Y)×ÜÏûºÄ£º',num2str(costY),'mm']};
+msg = {['ç‰‡é•¿(Y)æ€»æ¶ˆè€—ï¼š',num2str(costY),'mm']};
 time_all = sum(time.Time);
 hour = floor(time_all / 3600);minute = floor((time_all - hour*3600) / 60);second = floor(time_all - hour*3600 - minute*60);
-msgTime = 'Ô¤¼Æ¼Ó¹¤Ê±¼ä£º';
+msgTime = 'é¢„è®¡åŠ å·¥æ—¶é—´ï¼š';
 if hour,msgTime = [msgTime,num2str(hour),'h'];end
 if minute,msgTime = [msgTime,num2str(minute),'m'];end
 if second,msgTime = [msgTime,num2str(second),'s'];end
 msg(2,1) = {msgTime};
+if pgm.num
+    delete('temp.pgm');
+    timeListtemp = [timeList(1);diff(timeList)];
+    for temp = 1:pgm.num
+        timetemp = timeListtemp(temp);
+        hour = floor(timetemp / 3600);minute = floor((timetemp - hour*3600) / 60);second = floor(timetemp - hour*3600 - minute*60);
+        msgTime = [msgTime,newline,pgm.list{temp},':'];
+        if hour,msgTime = [msgTime,num2str(hour),'h'];end
+        if minute,msgTime = [msgTime,num2str(minute),'m'];end
+        if second,msgTime = [msgTime,num2str(second),'s'];end
+    end
+end
 % plot summary pie
 f2 = figure(2);f2.Position = [f1.Position(1)+f1.Position(3),f1.Position(2:4)];
 subplot(1,2,1);pie(count.Count,count.Category);title('Count','Color','red');
 subplot(1,2,2);pie(time.Time,time.Category);title('Time','Color','red');
-disp(time),disp(count),disp(msg)
+disp(time),disp(count),disp(msg),disp(msgTime)
 fabricate_debugger_costY = msg{1};fabricate_debugger_costTime = msg{2};
 if ~continue_fabricata
     clearvars -except fabricate_debugger_costY fabricate_debugger_costTime time count costY f1;f1=figure(1);
@@ -250,7 +252,7 @@ switch s(1)
     case 'I',pgmI=temp;
     case 'J',pgmJ=temp;
     case 'R',pgmR=temp;
-    otherwise,error('SWITCH:Î´ÄÜÊ¶±ğ%f',s(1));
+    otherwise,error('SWITCH:æœªèƒ½è¯†åˆ«%f',s(1));
 end
 end
 function G92(varargin)
@@ -260,25 +262,25 @@ for temp = varargin
         case 'X',PointG92(1)=PointNow(1) - str2double(temp{1}(2:end));
         case 'Y',PointG92(2)=PointNow(2) - str2double(temp{1}(2:end));
         case 'Z',PointG92(3)=PointNow(3) - str2double(temp{1}(2:end));
-        otherwise,error([mfilename,'£º²Ù×÷·û·Ç·¨'],'G92:·Ç·¨²Ù×÷·û<%f>',s(1));
+        otherwise,error([mfilename,'ï¼šæ“ä½œç¬¦éæ³•'],'G92:éæ³•æ“ä½œç¬¦<%f>',s(1));
     end
 end
 end
 
 function time = LINEAR(s)
-global PointBefor PointNow costY...	% Î»ÖÃ×´Ì¬
-    VelocityBefor VelocityNow Velocity_min Velocity_max Vindex notdwell ...	% ÔË¶¯×´Ì¬
-    plotSwitch pgmF lineColorF lineWidth lineColor dtime    %#ok    % »æÍ¼²ÎÊı
-PointBefor = PointNow;VelocityBefor = VelocityNow;  % ±£´æÇ°Ò»×´Ì¬
+global PointBefor PointNow costY...	% ä½ç½®çŠ¶æ€
+    VelocityBefor VelocityNow Velocity_min Velocity_max Vindex notdwell ...	% è¿åŠ¨çŠ¶æ€
+    plotSwitch pgmF lineColorF lineWidth lineColor dtime    %#ok    % ç»˜å›¾å‚æ•°
+PointBefor = PointNow;VelocityBefor = VelocityNow;  % ä¿å­˜å‰ä¸€çŠ¶æ€
 for temp=s,SWITCH(temp{:});end
 if PointNow(2)<costY;costY=PointNow(2);end
 VelocityNow=PointNow-PointBefor;
-if ~any(VelocityNow);time=0;return;end  % Èô²»¶¯£¬Ö±½Ó·µ»Ø
-L=norm(VelocityNow);    % ÒÆ¶¯¾àÀë
+if ~any(VelocityNow);time=0;return;end  % è‹¥ä¸åŠ¨ï¼Œç›´æ¥è¿”å›
+L=norm(VelocityNow);    % ç§»åŠ¨è·ç¦»
 VelocityNow=VelocityNow/norm(VelocityNow);
-% ÅĞ¶ÏÇ°Ò»×´Ì¬ÓëÏÖÔÚ×´Ì¬ÊÇ·ñ·ûºÏÎïÀíÂß¼­¹ØÏµ
+% åˆ¤æ–­å‰ä¸€çŠ¶æ€ä¸ç°åœ¨çŠ¶æ€æ˜¯å¦ç¬¦åˆç‰©ç†é€»è¾‘å…³ç³»
 notdwell = is_dwell(VelocityBefor,VelocityNow,notdwell);
-% »­Í¼
+% ç”»å›¾
 if plotSwitch
     if dtime,pause(dtime);end
     temp = plot3([PointBefor(1),PointNow(1)],[PointBefor(2),PointNow(2)],...
@@ -291,18 +293,17 @@ end
 time = L/pgmF*Vindex;
 end
 function time = CW(isCCW,s)
-global PointBefor PointNow pgmI pgmJ pgmR costY...	% Î»ÖÃ×´Ì¬
-    VelocityBefor VelocityNow Velocity_min Velocity_max Vindex notdwell ...	% ÔË¶¯×´Ì¬
-    plotSwitch pgmF lineColorF lineWidth lineColor dtime    %#ok    % »æÍ¼²ÎÊı
-curveNum = 9;  % curveNum-1¶ÎÖ±ÏßÃèÊöÒ»¶Î»¡
-PointBefor = PointNow;VelocityBefor = VelocityNow;  % ±£´æÇ°Ò»×´Ì¬
+global PointBefor PointNow pgmI pgmJ pgmR costY...	% ä½ç½®çŠ¶æ€
+    VelocityBefor VelocityNow Velocity_min Velocity_max Vindex notdwell ...	% è¿åŠ¨çŠ¶æ€
+    plotSwitch pgmF lineColorF lineWidth lineColor dtime    %#ok    % ç»˜å›¾å‚æ•°
+curveNum = 9;  % curveNum-1æ®µç›´çº¿æè¿°ä¸€æ®µå¼§
+PointBefor = PointNow;VelocityBefor = VelocityNow;  % ä¿å­˜å‰ä¸€çŠ¶æ€
 for temp = s,SWITCH(temp{:});end
 PB2PE = PointNow - PointBefor;
 Vertical = cross(VelocityBefor,PB2PE);
 Vertical = Vertical/norm(Vertical);
-% if isCCW;Vertical=-Vertical;end
 if isempty(pgmR)
-    % ÊäÈëÎªIJ£¬I¶ÔÓ¦Ö¸¶¨ÖÕµãµÚÒ»¸öÖáÆğÊ¼×ø±êµÄÏà¶ÔÆ«ÒÆÁ¿
+    % è¾“å…¥ä¸ºIJï¼ŒIå¯¹åº”æŒ‡å®šç»ˆç‚¹ç¬¬ä¸€ä¸ªè½´èµ·å§‹åæ ‡çš„ç›¸å¯¹åç§»é‡
     O = PointBefor;
     notdwell = zeros(1,3);
     switch s{1}(1)
@@ -319,11 +320,11 @@ if isempty(pgmR)
         Vertical = cross(PB2PE,O-PointBefor);
         Vertical = Vertical/norm(Vertical);
     end
-    % °ë¾¶ÎªÆğÊ¼Î»ÖÃÓëÖ¸¶¨Æ«ÒÆÁ¿Ö®¼äµÄ¾àÀë
+    % åŠå¾„ä¸ºèµ·å§‹ä½ç½®ä¸æŒ‡å®šåç§»é‡ä¹‹é—´çš„è·ç¦»
     pgmR = norm(O - PointBefor);
-else    % ÊäÈëÎªR
+else    % è¾“å…¥ä¸ºR
     notdwell = zeros(1,3);
-    % ÔË¶¯ÖáÖÃÎªÎ´dwell
+    % è¿åŠ¨è½´ç½®ä¸ºæœªdwell
     switch s{1}(1)
         case 'X',notdwell(1)=1;
         case 'Y',notdwell(2)=1;
@@ -334,24 +335,22 @@ else    % ÊäÈëÎªR
         case 'Y',notdwell(2)=1;
         case 'Z',notdwell(3)=1;
     end
-    Fr1 = cross(VelocityBefor,Vertical);	% Æğµã-R*ÏòÁ¿Fr1ÎªÔ²ĞÄ
+    Fr1 = cross(VelocityBefor,Vertical);	% èµ·ç‚¹-R*å‘é‡Fr1ä¸ºåœ†å¿ƒ
     O=PointBefor-pgmR*Fr1;
 end
 if PB2PE == 0
-theta = 2*pi;
-pgmR = sqrt(pgmI^2+pgmJ^2);
+    theta = 2*pi;
+    pgmR = sqrt(pgmI^2+pgmJ^2);
 else
-n1=(PointBefor-O)/pgmR;n2=cross(Vertical,n1); %²ÎÊı·½³Ì¾¶ÏòÏòÁ¿
-O2PE=PointNow - O;O2PB=PointBefor - O;
-theta=atan2(dot(O2PE,n2),dot(O2PE,n1));
-% if theta<0,theta=theta+2*pi;end
-% if isCCW,theta=2*pi-theta;end
-T = [n1',n2',O']; % ×ø±êÏµ±ä»»¾ØÕó
-if isCCW,theta=-theta;end
-if dot(cross(O2PB,O2PE),[0,0,1])>0,theta=2*pi-theta;end  % Ğı×ªÖáÓëzÖáµã»ı£¬Õı¸ºÓ°ÏìCW/CCW
-VelocityNow = (T*[-sin(theta);cos(theta);0])';
+    n1=(PointBefor-O)/pgmR;n2=cross(Vertical,n1); %å‚æ•°æ–¹ç¨‹å¾„å‘å‘é‡
+    O2PE=PointNow - O;O2PB=PointBefor - O;
+    theta=atan2(dot(O2PE,n2),dot(O2PE,n1));
+    T = [n1',n2',O']; % åæ ‡ç³»å˜æ¢çŸ©é˜µ
+    if isCCW,theta=-theta;end
+    if dot(cross(O2PB,O2PE),[0,0,1])>0,theta=2*pi-theta;end  % æ—‹è½¬è½´ä¸zè½´ç‚¹ç§¯ï¼Œæ­£è´Ÿå½±å“CW/CCW
+    VelocityNow = (T*[-sin(theta);cos(theta);0])';
 end
-% »­Í¼
+% ç”»å›¾
 if plotSwitch
     if dtime,pause(dtime);end
     if isCCW,t = linspace(theta,2*pi,curveNum);else,t = linspace(0,theta,curveNum);end
@@ -374,13 +373,13 @@ if plotSwitch
             case 'Z',Move.(s{2}(1))=pgmR*sin(t)+O(3);
         end
     else
-        A = [pgmR*cos(t);pgmR*sin(t);ones(1,curveNum)];	% Ô²Æ½Ãæ×ø±êÏµµÄ²ÎÊı·½³Ì[x,y,1]
-        B = T*A;    % ¾Ö²¿×ø±êÏµ{X'OY'}×ª»»µ½{XYZ}
+        A = [pgmR*cos(t);pgmR*sin(t);ones(1,curveNum)];	% åœ†å¹³é¢åæ ‡ç³»çš„å‚æ•°æ–¹ç¨‹[x,y,1]
+        B = T*A;    % å±€éƒ¨åæ ‡ç³»{X'OY'}è½¬æ¢åˆ°{XYZ}
         Move.X = B(1,:);Move.Y = B(2,:);Move.Z = B(3,:);
     end
-    if any(Move.Y<costY);costY=min(Move.Y(Move.Y<costY));end   % ÅĞ¶ÏYÏûºÄ³¤¶È
+    if any(Move.Y<costY);costY=min(Move.Y(Move.Y<costY));end   % åˆ¤æ–­Yæ¶ˆè€—é•¿åº¦
     temp = plot3(Move.X,Move.Y,Move.Z,'-','LineWidth',lineWidth,'Color',lineColor);
-    temp2 = plot3([Move.X(1) Move.X(end)],[Move.Y(1) Move.Y(end)],[Move.Z(1) Move.Z(end)],'.'); % Ê×Î²Á½µã±ê¼Ç
+    temp2 = plot3([Move.X(1) Move.X(end)],[Move.Y(1) Move.Y(end)],[Move.Z(1) Move.Z(end)],'.'); % é¦–å°¾ä¸¤ç‚¹æ ‡è®°
     if ~any(lineColor)&&pgmF>Velocity_min&&pgmF<=Velocity_max
         temp.Color = lineColorF(fix(pgmF - Velocity_min),:);
     else,temp.Color = lineColor;
@@ -392,25 +391,25 @@ end
 
 function notdwell = is_dwell(v0,v1,notdwell)
 %{
-ÅĞ¶Ï3Öá´ó·ù¶È±äÏàÇ°ÊÇ·ñdwell
+åˆ¤æ–­3è½´å¤§å¹…åº¦å˜ç›¸å‰æ˜¯å¦dwell
 
-ÊäÈë²ÎÊä£º
-v0£ºÇ°Ò»×´Ì¬Ä©ËÙ¶È
-v1£ºÏÖ×´Ì¬³õËÙ¶È
-notdwell£ºÈıÖádwellÇé¿ö£¬1--Î´dewell
-Êä³ö½á¹û£º
-Èô´ó·ù±äÏàÎ´dwell£¬±¨´íÖá¡¢ĞĞÊı¡¢ĞĞÄÚÈİ
-ÎŞÎóÔò¸üĞÂnotdwell
+è¾“å…¥å‚è¾“ï¼š
+v0ï¼šå‰ä¸€çŠ¶æ€æœ«é€Ÿåº¦
+v1ï¼šç°çŠ¶æ€åˆé€Ÿåº¦
+notdwellï¼šä¸‰è½´dwellæƒ…å†µï¼Œ1--æœªdewell
+è¾“å‡ºç»“æœï¼š
+è‹¥å¤§å¹…å˜ç›¸æœªdwellï¼ŒæŠ¥é”™è½´ã€è¡Œæ•°ã€è¡Œå†…å®¹
+æ— è¯¯åˆ™æ›´æ–°notdwell
 %}
 ismove = ones(1,3);
-ismove(v1==0) = v1(v1==0);  % ÈÏÎªÏÖ×´Ì¬³õËÙ¶ÈÎª0µÄÖáÎªÎ´ÔË¶¯Öá
-if any(notdwell&ismove)	% ÔË¶¯ÖáÎ´dwell
-    if dot(v0,v1) < 0.98 % ¼Ğ½Ç´óÓÚ8.11¡ã
-        % ¿ÉÒÔ±¨´íÁË
+ismove(v1==0) = v1(v1==0);  % è®¤ä¸ºç°çŠ¶æ€åˆé€Ÿåº¦ä¸º0çš„è½´ä¸ºæœªè¿åŠ¨è½´
+if any(notdwell&ismove)	% è¿åŠ¨è½´æœªdwell
+    if dot(v0,v1) < 0.98 % å¤¹è§’å¤§äº8.11Â°
+        % å¯ä»¥æŠ¥é”™äº†
         global currentLine rowNow %#ok
         temp = {'x','y','z'};temp = temp(notdwell==1);temp = [temp{:}];
-        error(['±äÏò',temp,'Î´DWELL£º%s£¬line %d£¬Çë³¢ÊÔ',...
-            'µ÷´ó³ÌĞòµÄÅĞ¶ÏÌõ¼ş0.1£¬»òÖ±½Ó±¸×¢µôis_dwellº¯Êı'],currentLine,rowNow)
+        error(['å˜å‘',temp,'æœªDWELLï¼š%sï¼Œline %dï¼Œè¯·å°è¯•',...
+            'è°ƒå¤§ç¨‹åºçš„åˆ¤æ–­æ¡ä»¶0.1ï¼Œæˆ–ç›´æ¥å¤‡æ³¨æ‰is_dwellå‡½æ•°'],currentLine,rowNow)
     end
 end
 notdwell = ismove;

@@ -1,99 +1,69 @@
-% 更新日志
-%{
-v2.4
-2023-10-09
-.加入CW/CCW纠错检测
-v2.3
-2023/5/31
-.加入CW/CCW画整个圆
-V2.2
-2023/4/26
-.加入连续.pgm加工绘制（速度colorbar仅代表当前程序，上个程序不重绘
-.加入画图间隔
-.改善figure1、figure2排列（现在figure2依据figure1的位置是紧贴在右侧
-.修复0.x速度的绘图颜色
-V2.1
-.修复CW绘制颜色
-.修复notdwell判断
-.修复pie图time题目文本
-.修复LINEAR指令未运动报错
-V2.0
-.重构
-V1.6
-2022/07/19
-.增加函数is_dwell，修复变向dwell判断
-V1.5
-2022/06/21
-.加入以'pgmVariables.mat'命名，在当前文件夹下，缓存上次运行数据
-.改善colorbar色阶
-V1.4
-2022/05/04
-.加入变方向是否dwell判定
-.修复CW、CCW画线
-V1.3
-2021/12/1
-.改善标识符识别逻辑
-.加入是否画图，.pgm中的"'plotSwitch 1"即为开启画图，"'plotSwitch 0"为关闭，默认开启
-.加入X、Y、Z轴标识
-.改善costY变量以存储最大Y值（之前直接用最后的Y做为使用量
-.加入进度条，可以在line 47中更改刷新间隔行数，默认为1000行
-.加入速度颜色线，色阶为cool，若颜色变化不明显可在line 48、49中更改最大速度及最小...
-速度，默认为100mm/s及0，最大速度设置过低会报错，当前速度低于最小值会画黑线
-V1.2
-2021/10/20
-add:
-.增加版本更新功能，基于在matlab的搜索路径中加入函数debuggerVersionCheck()实现
-.增加.pgm注释识别，欲在新版本debugger中实现部分绘图功能
-.增加.pgm程序语句使用情况计数
-change:
-.figure()->clf，不新建图窗
-remove:
-.移除画图首句plot3(0,0,0)，以便于平面观察非3D图
-V1.1
-2021/10/05
-add:
-.增加支持标识符G92
-.增加运行结束显示使用片长以及运行预估时间
-.增加光闸开关线宽
-.增加清除无关变量
-.增加空行识别
-.增加画图首句为plot3(0,0,0)
-fixed:
-.修正LINEAR计时为0
-changed:
-.调整标识符判断顺序
-.调整CW/CCW中linspace取点数100->10
-.调整figure弹出在选文件之后
-.调整整个程序只调用两次hold
-%}
+%% 选取.pgm文件
+% dbclear if error
+% dbstop if error
+[fileName,filePath]=uigetfile('*.pgm','Save File','');
+pgmPath = fullfile(filePath,fileName);
+
+ticAll = tic;
+if ~fileName,error('未选取文件');end
+a = strfind(fileName,'.');
+if ~a,error('选取文件无“.”');end
+if fileName(max(a):end) ~= '.pgm',error('未选取.pgm文件');end%#ok
+
 %% 预设参数
 global Velocity_min Velocity_max dtime  %#ok
 rowPeriod = 1000;   % 进度条间隔，越大运行越快；减小可以观察画线
-Velocity_max = [];	% 若开光闸运行速度在最大与最小之外，线为黑色
-Velocity_min = [];	% 设为[]则自动遍历开光闸速度
+Velocity_max_input = [];	% 若开光闸运行速度在最大与最小之外，线为黑色
+Velocity_min_input = [];	% 设为[]则自动遍历开光闸速度
 dtime = 0;  % 画图间隔
-continue_fabricata = 1; % 设为1则启动连续加工模式,绘图colorbar仅依据当前程序
+continue_fabricata = 0; % 设为1则启动连续加工模式,绘图colorbar仅依据当前程序
+pgmDiv.Xsize = 5;
+pgmDiv.Zsize = 0.05;
 
 %% 保存提供加工程序的工作区
 if ~continue_fabricata
-    save('temp.mat',"Velocity_min","Velocity_max","dtime","rowPeriod","continue_fabricata")
-    clearvars Velocity_min Velocity_max dtime rowPeriod continue_fabricata
+    save('temp.mat',"Velocity_min_input","Velocity_max_input","Velocity_min","Velocity_max","dtime","rowPeriod","continue_fabricata","pgmPath","pgmDiv","ticAll")
+    clearvars Velocity_min_input Velocity_max_input dtime rowPeriod continue_fabricata
     save('pgmVariables.mat')
     clear
     load("temp.mat")
     delete("temp.mat")
 end
-%% 选取.pgm文件
-dbclear if error
-[fileName,filePath]=uigetfile('*.pgm','Save File','');
 
-if ~fileName,error('未选取文件');end
-a = strfind(fileName,'.');
-if ~a,error('选取文件无“.”');end
-if fileName(max(a):end) ~= '.pgm',error('未选取.pgm文件');end%#ok
-% dbstop if error
+%% PROGRAM构建新文件为temp.pgm
+tic,f=fopen(pgmPath,'r');
+pgm.list = {};
+pgm.num = 0;
+while ~feof(f)
+    currentLine = fgetl(f);
+    if isempty(currentLine),continue;end % 空行
+    s = textscan(currentLine,'%s ');
+    if isempty(s),continue;end % 空行
+    if strcmp(s{1}{1},'PROGRAM')&&length(s{1})>2&&strcmp(s{1}{3},'RUN')
+        pgm.num = pgm.num+1;
+        pgm.list(pgm.num)={s{1}{4}(2:end-1)};
+    end
+end
+fclose(f);toc,fprintf('检测PROGRAM RUN完成\n');
+
+if pgm.num
+    tic,fprintf('检测到PROGRAM RUN,合并存储为temp.pgm\n');
+    f=fopen('temp.pgm','w');
+    for temp = 1:pgm.num
+        ftemp = fopen(pgm.list{temp},'r');
+        while ~feof(ftemp)
+            currentLine = fgets(ftemp);
+            fwrite(f,currentLine);
+        end
+        fwrite(f,sprintf('\n''OYY_END\n'));
+        fclose(ftemp);
+    end
+    fclose(f);toc,fprintf('temp.pgm生成完成\n');
+    pgmPath = 'temp.pgm';
+end
+
 %% 计算文本总行数
-tic,f=fopen([filePath,fileName],'r');
+tic,f=fopen(pgmPath,'r');
 rowTotal = 0;
 while ~feof(f)
     rowTotal = rowTotal + sum(fread(f,10000,'char')==10);
@@ -102,23 +72,25 @@ fclose(f);toc
 fprintf('.pgm总行数%d\n',rowTotal);
 
 %% 找出速度最大值、最小值
-vmax=0;vmin=0;
-if isempty(Velocity_max),vmax=1;Velocity_max=-inf;end
-if isempty(Velocity_min),vmin=1;Velocity_min = inf;end
+vmax=0;vmin=0;tt=1;t=1;
+if isempty(Velocity_max_input),vmax=1;Velocity_max = -inf;end
+if isempty(Velocity_min_input),vmin=1;Velocity_min = inf;end
 if vmax||vmin
-    tic,f=fopen([filePath,fileName],'r');
+    tic,f=fopen(pgmPath,'r');
     while ~feof(f)
         currentLine = fgetl(f);
+        if isempty(currentLine),continue;end % 空行
         s = textscan(currentLine,'%s ');
+        if isempty(s),continue;end % 空行
         switch s{1}{1}
             case 'PSOCONTROL'
-                switch s{1}{3} 
+                switch s{1}{3}
                     case 'ON',t=1;
                     case 'OFF',t=0;
                     case 'RESET',t=0;
                 end
             case {'LINEAR','CW','CCW'}
-                if t
+                if t&&tt
                     Velocity_temp = textscan(currentLine,'%*[^F] F%f');
                     Velocity_temp = Velocity_temp{:};
                     if vmax,Velocity_max = max(Velocity_temp,Velocity_max);end
@@ -131,13 +103,15 @@ if vmax||vmin
                 end
         end
     end,toc
-    fprintf('最大速度：%f\n最小速度：%f\n',Velocity_max,Velocity_min);
+    temp = ceil(log10(Velocity_max))+6;
+    fprintf('最大速度：%*.4f\n最小速度：%*.4f\n',temp,Velocity_max,temp,Velocity_min);
 end
-
+toc(ticAll)
 %% main
-f=fopen([filePath,fileName],'r');
+f=fopen(pgmPath,'r');
 Category = {'LINEAR';'CW&CCW';'DWELL'};Time = zeros(length(Category),1);
 time = table(Category,Time);time.Properties.VariableUnits = {'' 's'};
+timeList = zeros(pgm.num,1);
 Category = {'LINEAR';'DWELL';'PSOCONTROL';'CW&CCW';'INCREMENTAL&ABSOLUTE';'Other'};
 Count = zeros(length(Category),1);count = table(Category,Count);
 rowNow = 0; % 当前行数
@@ -157,12 +131,12 @@ if Velocity_min<1,Vindex = 1/Velocity_min;end
 Velocity_min=Vindex*Velocity_min-1;Velocity_max=Vindex*Velocity_max;
 lineColorF = colormap(cool(fix(Velocity_max - Velocity_min)));
 notdwell=[0,0,0];
-waitBar=waitbar(0,'1','name','SIMULATING...');
+waitBar=waitbar(0,'1','name','SIMULATING...');pgmCount = 1;
 while ~feof(f)
     rowNow = rowNow + 1;
     if mod(rowNow,rowPeriod) == 0
         waitbar(rowNow/rowTotal,waitBar,sprintf('%.3g%%，rowNow=%d\nrowTotal=%d',...
-            rowNow/rowTotal*100,rowNow,rowTotal));
+            rowNow/rowTotal*100,rowNow,rowTotal));toc(ticAll)
     end
     currentLine = fgetl(f);
     if isempty(currentLine),continue;end % 空行
@@ -173,6 +147,19 @@ while ~feof(f)
             time.Time(1)=time.Time(1)+LINEAR(s{1}(2:end)');count.Count(1)=count.Count(1)+1;
         case 'DWELL',time.Time(3)=time.Time(3)+str2double(s{1}(2));count.Count(2)=count.Count(2)+1;
             notdwell=[0,0,0];VelocityNow=[0,0,0];
+        case 'WAIT',time.Time(3)=time.Time(3)+0.1;count.Count(2)=count.Count(2)+1;
+            % if s{1}(2)
+            for temp = s{1}(3:end)
+                switch temp{1}
+                    case 'X'
+                        notdwell(1)=0;VelocityNow(1)=0;
+                    case 'Y'
+                        notdwell(2)=0;VelocityNow(2)=0;
+                    case 'Z'
+                        notdwell(3)=0;VelocityNow(3)=0;
+                        % otherwise,error('%s',currentLine);
+                end
+            end
         case 'PSOCONTROL',count.Count(3)=count.Count(3)+1;
             switch s{1}{3}
                 case 'ON',lineColor = [0 0 0];lineWidth = 1.5;
@@ -185,23 +172,27 @@ while ~feof(f)
         case 'INCREMENTAL',isABSOLUTE=0;count.Count(5)=count.Count(5)+1;
         case 'ABSOLUTE',isABSOLUTE=1;count.Count(5)=count.Count(5)+1;
         case 'G92',G92(s{1}{2:end});count.Count(6)=count.Count(6)+1;
-        case {'G359','ENABLE','METRIC','SECONDS','VELOCITY','PSOOUTPUT'},count.Count(6)=count.Count(6)+1;
+        case {'G359','ENABLE','METRIC','SECONDS','VELOCITY','PSOOUTPUT','PROGRAM'},count.Count(6)=count.Count(6)+1;
         otherwise
             if currentLine(1) == "'"    % 注释行
-                if strcmp(s{1}{1},"'plotSwitch")   %绘制判断
+                if strcmp(s{1}{1},"'plotSwitch")   % 绘制判断
                     switch s{1}{2}
                         case '1',plotSwitch=1;
                         case '0',plotSwitch=0;
                         otherwise,error("'plotSwitch非识别操作符：%s",s{1}{2});
                     end
                 end
-                continue;
+                if strcmp(pgmPath,'temp.pgm')&&strcmp(s{1}{1},"'OYY_END")   % .pgm之一终止
+                    mesh([0,0;pgmDiv.Xsize,pgmDiv.Xsize],[costY,costY;costY,costY],[PointNow(3),PointNow(3)-pgmDiv.Zsize;PointNow(3),PointNow(3)-pgmDiv.Zsize],EdgeColor='k',LineWidth=2,FaceColor='w',FaceAlpha=0.3);
+                    timeList(pgmCount) = sum(time.Time);pgmCount = pgmCount+1;
+                end
+            else
+                error([mfilename,'：标识符非法'],[currentLine,'\n非法标识符<%s>，line %d'],s{1}{1},rowNow);
             end
-            error([mfilename,'：标识符非法'],[currentLine,'\n非法标识符<%s>，line %d'],s{1}{1},rowNow);
     end
 end
 %% close
-fclose(f);delete(waitBar);hold off;
+fclose("all");delete(waitBar);hold off;
 % colorbar
 numV = Velocity_max - Velocity_min;
 Velocity_min = Velocity_min + 1;
@@ -209,20 +200,32 @@ if numV > 10,c = colorbar('Ticks',0:0.1:1,'TickLabels',{linspace(Velocity_min,Ve
 else,c = colorbar('Ticks',linspace(0,1,numV),'TickLabels',{linspace(Velocity_min,Velocity_max,numV)/Vindex});
 end,c.Label.String = '开光闸的运动速度';
 % msgbox
-msg = {'THE SIMULATION HAS BEEN COMPLETED';['片长(Y)总消耗：',num2str(costY),'mm']};
+msg = {['片长(Y)总消耗：',num2str(costY),'mm']};
 time_all = sum(time.Time);
 hour = floor(time_all / 3600);minute = floor((time_all - hour*3600) / 60);second = floor(time_all - hour*3600 - minute*60);
 msgTime = '预计加工时间：';
 if hour,msgTime = [msgTime,num2str(hour),'h'];end
 if minute,msgTime = [msgTime,num2str(minute),'m'];end
 if second,msgTime = [msgTime,num2str(second),'s'];end
-msg(3,1) = {msgTime};
+msg(2,1) = {msgTime};
+if pgm.num
+    delete('temp.pgm');
+    timeListtemp = [timeList(1);diff(timeList)];
+    for temp = 1:pgm.num
+        timetemp = timeListtemp(temp);
+        hour = floor(timetemp / 3600);minute = floor((timetemp - hour*3600) / 60);second = floor(timetemp - hour*3600 - minute*60);
+        msgTime = [msgTime,newline,pgm.list{temp},':'];
+        if hour,msgTime = [msgTime,num2str(hour),'h'];end
+        if minute,msgTime = [msgTime,num2str(minute),'m'];end
+        if second,msgTime = [msgTime,num2str(second),'s'];end
+    end
+end
 % plot summary pie
 f2 = figure(2);f2.Position = [f1.Position(1)+f1.Position(3),f1.Position(2:4)];
 subplot(1,2,1);pie(count.Count,count.Category);title('Count','Color','red');
 subplot(1,2,2);pie(time.Time,time.Category);title('Time','Color','red');
-disp(time),disp(count),disp(msg)
-fabricate_debugger_costY = msg{2};fabricate_debugger_costTime = msg{3};
+disp(time),disp(count),disp(msg),disp(msgTime)
+fabricate_debugger_costY = msg{1};fabricate_debugger_costTime = msg{2};
 if ~continue_fabricata
     clearvars -except fabricate_debugger_costY fabricate_debugger_costTime time count costY f1;f1=figure(1);
     load('pgmVariables.mat');delete('pgmVariables.mat');
@@ -299,7 +302,6 @@ for temp = s,SWITCH(temp{:});end
 PB2PE = PointNow - PointBefor;
 Vertical = cross(VelocityBefor,PB2PE);
 Vertical = Vertical/norm(Vertical);
-% if isCCW;Vertical=-Vertical;end
 if isempty(pgmR)
     % 输入为IJ，I对应指定终点第一个轴起始坐标的相对偏移量
     O = PointBefor;
@@ -337,18 +339,16 @@ else    % 输入为R
     O=PointBefor-pgmR*Fr1;
 end
 if PB2PE == 0
-theta = 2*pi;
-pgmR = sqrt(pgmI^2+pgmJ^2);
+    theta = 2*pi;
+    pgmR = sqrt(pgmI^2+pgmJ^2);
 else
-n1=(PointBefor-O)/pgmR;n2=cross(Vertical,n1); %参数方程径向向量
-O2PE=PointNow - O;O2PB=PointBefor - O;
-theta=atan2(dot(O2PE,n2),dot(O2PE,n1));
-% if theta<0,theta=theta+2*pi;end
-% if isCCW,theta=2*pi-theta;end
-T = [n1',n2',O']; % 坐标系变换矩阵
-if isCCW,theta=-theta;end
-if dot(cross(O2PB,O2PE),[0,0,1])>0,theta=2*pi-theta;end  % 旋转轴与z轴点积，正负影响CW/CCW
-VelocityNow = (T*[-sin(theta);cos(theta);0])';
+    n1=(PointBefor-O)/pgmR;n2=cross(Vertical,n1); %参数方程径向向量
+    O2PE=PointNow - O;O2PB=PointBefor - O;
+    theta=atan2(dot(O2PE,n2),dot(O2PE,n1));
+    T = [n1',n2',O']; % 坐标系变换矩阵
+    if isCCW,theta=-theta;end
+    if dot(cross(O2PB,O2PE),[0,0,1])>0,theta=2*pi-theta;end  % 旋转轴与z轴点积，正负影响CW/CCW
+    VelocityNow = (T*[-sin(theta);cos(theta);0])';
 end
 % 画图
 if plotSwitch
@@ -408,8 +408,8 @@ if any(notdwell&ismove)	% 运动轴未dwell
         % 可以报错了
         global currentLine rowNow %#ok
         temp = {'x','y','z'};temp = temp(notdwell==1);temp = [temp{:}];
-%         error(['变向',temp,'未DWELL：%s，line %d，请尝试',...
-%             '调大程序的判断条件0.1，或直接备注掉is_dwell函数'],currentLine,rowNow)
+        error(['变向',temp,'未DWELL：%s，line %d，请尝试',...
+            '调大程序的判断条件0.1，或直接备注掉is_dwell函数'],currentLine,rowNow)
     end
 end
 notdwell = ismove;
