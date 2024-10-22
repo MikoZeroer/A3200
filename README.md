@@ -2,6 +2,8 @@
 A3200 fabricate_debugger
 
 ## 更新日志
+### v2.6
++ 修复WAIT MOVEDONE X Y Z (line 151)
 ### v2.5
 + ~~重构为function(太麻烦了)~~
 + 增加支持PROGRAM 1 RUN
