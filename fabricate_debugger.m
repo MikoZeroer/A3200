@@ -148,9 +148,8 @@ while ~feof(f)
         case 'DWELL',time.Time(3)=time.Time(3)+str2double(s{1}(2));count.Count(2)=count.Count(2)+1;
             notdwell=[0,0,0];VelocityNow=[0,0,0];
         case 'WAIT',time.Time(3)=time.Time(3)+0.1;count.Count(2)=count.Count(2)+1;
-            % if s{1}(2)
-            for temp = s{1}(3:end)
-                switch temp{1}
+            for temp = s{1}(3:end)'
+                switch temp{:}
                     case 'X'
                         notdwell(1)=0;VelocityNow(1)=0;
                     case 'Y'
