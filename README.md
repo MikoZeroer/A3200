@@ -2,6 +2,9 @@
 A3200 fabricate_debugger
 
 ## 更新日志
+### v2.7
++ 增加“开光闸且正向x运动时报错” (line 14 22 272 291--293)
++ 增加改功率指令 (line 175--176)
 ### v2.6
 + 修复WAIT MOVEDONE X Y Z (line 151 -- 152)
 ### v2.5

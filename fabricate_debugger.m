@@ -11,7 +11,7 @@ if ~a,error('选取文件无“.”');end
 if fileName(max(a):end) ~= '.pgm',error('未选取.pgm文件');end%#ok
 
 %% 预设参数
-global Velocity_min Velocity_max dtime  %#ok
+global Velocity_min Velocity_max dtime WarnX  %#ok
 rowPeriod = 1000;   % 进度条间隔，越大运行越快；减小可以观察画线
 Velocity_max_input = [];	% 若开光闸运行速度在最大与最小之外，线为黑色
 Velocity_min_input = [];	% 设为[]则自动遍历开光闸速度
@@ -19,6 +19,7 @@ dtime = 0;  % 画图间隔
 continue_fabricata = 0; % 设为1则启动连续加工模式,绘图colorbar仅依据当前程序
 pgmDiv.Xsize = 5;
 pgmDiv.Zsize = 0.05;
+WarnX = 1;  % 开光闸且x正向运动时报错
 
 %% 保存提供加工程序的工作区
 if ~continue_fabricata
@@ -171,7 +172,8 @@ while ~feof(f)
         case 'INCREMENTAL',isABSOLUTE=0;count.Count(5)=count.Count(5)+1;
         case 'ABSOLUTE',isABSOLUTE=1;count.Count(5)=count.Count(5)+1;
         case 'G92',G92(s{1}{2:end});count.Count(6)=count.Count(6)+1;
-        case {'G359','ENABLE','METRIC','SECONDS','VELOCITY','PSOOUTPUT','PROGRAM'},count.Count(6)=count.Count(6)+1;
+        case {'G359','ENABLE','METRIC','SECONDS','VELOCITY','PSOOUTPUT',...
+                'PROGRAM','DVAR','FILECLOSE','$hFile','COMMINIT','COMMSETTIMEOUT','FILEWRITE'},count.Count(6)=count.Count(6)+1;
         otherwise
             if currentLine(1) == "'"    % 注释行
                 if strcmp(s{1}{1},"'plotSwitch")   % 绘制判断
@@ -267,7 +269,7 @@ end
 end
 
 function time = LINEAR(s)
-global PointBefor PointNow costY...	% 位置状态
+global PointBefor PointNow costY WarnX...	% 位置状态
     VelocityBefor VelocityNow Velocity_min Velocity_max Vindex notdwell ...	% 运动状态
     plotSwitch pgmF lineColorF lineWidth lineColor dtime    %#ok    % 绘图参数
 PointBefor = PointNow;VelocityBefor = VelocityNow;  % 保存前一状态
@@ -286,6 +288,9 @@ if plotSwitch
         [PointBefor(3),PointNow(3)],'.-','LineWidth',lineWidth);
     if ~any(lineColor)&&pgmF>Velocity_min&&pgmF<=Velocity_max
         temp.Color = lineColorF(floor(pgmF - Velocity_min),:);
+        if WarnX&&VelocityNow(1)>0
+            error('开光闸时正向运动，请检查程序')
+        end
     else,temp.Color = lineColor;
     end
 end
